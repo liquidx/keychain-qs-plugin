@@ -37,7 +37,7 @@
 		NSDate *modDate = [[[NSFileManager defaultManager] fileAttributesAtPath:[q objectForType:QSFilePathType] 
 												 traverseLink:YES] fileModificationDate];
 		if ([modDate compare:indexDate] == NSOrderedDescending) {
-			return YES;
+			return NO;
 		}
 	}
 	return YES;
@@ -80,6 +80,7 @@
 			[objects addObject:newObject];
 		}
 	}
+	
 	return objects;
 }
 
@@ -89,59 +90,69 @@
 	SecKeychainItemRef itemRef = nil;
 	OSStatus status = 0;
 	NSMutableArray *objects = [NSMutableArray arrayWithCapacity:1];
-
-	// get items reference from keychsin
-	status = SecKeychainSearchCreateFromAttributes(keychain, 
-												   kSecGenericPasswordItemClass,
-												   NULL,
-												   &searchRef);
 	
-	if (status) {
-		printf("error creating search ref: %d\n", status);
-		return nil;
+	SecItemClass supportedTypes[2] = {kSecGenericPasswordItemClass, kSecInternetPasswordItemClass};
+	int supportedCount = 2;
+	int i;
+	
+	for (i = 0; i < supportedCount; i++) {
+		// get items reference from keychain
+		status = SecKeychainSearchCreateFromAttributes(keychain, supportedTypes[i],
+													   NULL,
+													   &searchRef);
+	
+		if (status) {
+			printf("error creating search ref: %d\n", status);
+			continue;
+		}
+	
+		// iterate thru all items and create QSObjects
+		while((status = SecKeychainSearchCopyNext(searchRef, &itemRef)) != errSecItemNotFound) {
+			if (status != noErr) {
+				printf("error getting next item reference: %d\n", status);
+				break;
+			}
+
+			// obtain attributes from KeychainItem
+			SecKeychainAttribute attributes[2];
+			attributes[0].tag = kSecLabelItemAttr;
+			attributes[1].tag = kAccountKCItemAttr;
+			
+			SecKeychainAttributeList attrList = {2, attributes};
+			
+			status = SecKeychainItemCopyContent(itemRef,
+												NULL,
+												&attrList,
+												NULL, NULL); // for no password
+			
+			if (status != noErr) {
+				CFRelease(itemRef);
+				itemRef = nil;
+				break;
+			}
+			
+			// create QSObject for KeychainItem
+			NSString *itemName = [NSString stringWithCString:attributes[0].data 
+													  length:attributes[0].length];
+			NSString *itemAccount = [NSString stringWithCString:attributes[1].data 
+														 length:attributes[1].length];
+
+			QSObject *newObject = [QSObject objectWithName:itemName];
+			[newObject setObject:itemName forType:kATKeychainItemType];
+			[newObject setPrimaryType:kATKeychainItemType];
+			[newObject setObject:[@"login:" stringByAppendingString:itemAccount]  forMeta:kQSObjectDetails];
+			[newObject setObject:[(NSObject *)itemRef autorelease] forType:kATKeychainItemRefType];
+			[objects addObject:newObject];
+			
+			SecKeychainItemFreeContent(&attrList, NULL);
+		}
+		if (searchRef) {
+			CFRelease(searchRef);		
+			searchRef = nil;
+		}
 	}
 	
-	// iterate thru all items and create QSObjects
-	while((status = SecKeychainSearchCopyNext(searchRef, &itemRef)) != errSecItemNotFound) {
-		if (status != noErr) {
-			printf("error getting next item reference: %d\n", status);
-			break;
-		}
-
-		// obtain attributes from KeychainItem
-		SecKeychainAttribute attributes[2];
-		attributes[0].tag = kSecLabelItemAttr;
-		attributes[1].tag = kAccountKCItemAttr;
-		
-		SecKeychainAttributeList attrList = {2, attributes};
-		
-		status = SecKeychainItemCopyContent(itemRef,
-											NULL,
-											&attrList,
-											NULL, NULL); // for no password
-		
-		if (status != noErr) {
-			CFRelease(itemRef);			
-			break;
-		}
-		
-		// create QSObject for KeychainItem
-		NSString *itemName = [NSString stringWithCString:attributes[0].data 
-												  length:attributes[0].length];
-		NSString *itemAccount = [NSString stringWithCString:attributes[1].data 
-													 length:attributes[1].length];
-
-		QSObject *newObject = [QSObject objectWithName:itemName];
-		[newObject setObject:itemName forType:kATKeychainItemType];
-		[newObject setPrimaryType:kATKeychainItemType];
-		[newObject setObject:[@"login:" stringByAppendingString:itemAccount]  forMeta:kQSObjectDetails];
-		[newObject setObject:[(NSObject *)itemRef autorelease] forType:kATKeychainItemRefType];
-		[objects addObject:newObject];
-		
-		SecKeychainItemFreeContent(&attrList, NULL);
-	}
-	
-	CFRelease(searchRef);
+	objects = [NSMutableArray arrayWithArray:[objects sortedArrayUsingSelector:@selector(nameCompare:)]];
 	return objects;
 }
 
@@ -180,6 +191,8 @@
 
 		[objects addObject:newObject];
 	}
+	objects = [NSMutableArray arrayWithArray:[objects sortedArrayUsingSelector:@selector(nameCompare:)]];
+	
 	return objects;	
 }
 
