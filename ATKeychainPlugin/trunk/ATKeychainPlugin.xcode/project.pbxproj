@@ -96,6 +96,62 @@
 			settings = {
 			};
 		};
+		03A603C6084DB45C006D6B6B = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = QSEffects.framework;
+			path = /Applications/Quicksilver.app/Contents/Frameworks/QSEffects.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		03A603C7084DB45C006D6B6B = {
+			fileRef = 03A603C6084DB45C006D6B6B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03A603FA084DB48D006D6B6B = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = QSCore.framework;
+			path = /Applications/Quicksilver.app/Contents/Frameworks/QSCore.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		03A603FB084DB48D006D6B6B = {
+			fileRef = 03A603FA084DB48D006D6B6B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03A603FC084DB49E006D6B6B = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = QSInterface.framework;
+			path = /Applications/Quicksilver.app/Contents/Frameworks/QSInterface.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		03A603FD084DB49E006D6B6B = {
+			fileRef = 03A603FC084DB49E006D6B6B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03A6040B084DB4E0006D6B6B = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = QSFoundation.framework;
+			path = /Applications/Quicksilver.app/Contents/Frameworks/QSFoundation.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		03A6040C084DB4E0006D6B6B = {
+			fileRef = 03A6040B084DB4E0006D6B6B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		03F48A4307F8B7A0001C017C = {
 			isa = PBXFileReference;
 			lastKnownFileType = text.rtf;
@@ -123,6 +179,14 @@
 			settings = {
 			};
 		};
+		03F50C5308164EDE00E0BDA8 = {
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			isa = PBXFileReference;
+			path = "Keychain Module.qsplugin";
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 //030
 //031
 //032
@@ -135,6 +199,7 @@
 //1E4
 		1ED78706FE9D4A0611CA0C5A = {
 			children = (
+				03F50C5308164EDE00E0BDA8,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -174,9 +239,11 @@
 		};
 		2E58F364FFB232C311CA0CBA = {
 			children = (
+				03A6040B084DB4E0006D6B6B,
+				03A603FC084DB49E006D6B6B,
+				03A603FA084DB48D006D6B6B,
+				03A603C6084DB45C006D6B6B,
 				0369E22A07F832D900BBC11D,
-				E1022AE706B3469300299BEC,
-				E1022AE806B3469300299BEC,
 				DD92D38A0106425D02CA0E72,
 			);
 			isa = PBXGroup;
@@ -258,7 +325,7 @@
 			name = ATKeychainPlugin;
 			productInstallPath = "$(HOME)/Developer/Palettes";
 			productName = "Keychain Module";
-			productReference = 8D1AC9740486D14A00FE50C9;
+			productReference = 03F50C5308164EDE00E0BDA8;
 			productType = "com.apple.product-type.bundle";
 		};
 		8D1AC9660486D14A00FE50C9 = {
@@ -283,9 +350,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D1AC9700486D14A00FE50C9,
-				E1022AE906B3469300299BEC,
-				E1022AEA06B3469300299BEC,
 				0369E22B07F832D900BBC11D,
+				03A603C7084DB45C006D6B6B,
+				03A603FB084DB48D006D6B6B,
+				03A603FD084DB49E006D6B6B,
+				03A6040C084DB4E0006D6B6B,
 			);
 			isa = PBXFrameworksBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,14 +372,6 @@
 			path = Info.plist;
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		8D1AC9740486D14A00FE50C9 = {
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			isa = PBXFileReference;
-			path = "Keychain Module.qsplugin";
-			refType = 3;
-			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 //8D0
 //8D1
@@ -340,34 +401,6 @@
 //E12
 //E13
 //E14
-		E1022AE706B3469300299BEC = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = QSCore.framework;
-			path = /Applications/Quicksilver.app/Contents/Frameworks/QSCore.framework;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		E1022AE806B3469300299BEC = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = QSInterface.framework;
-			path = /Applications/Quicksilver.app/Contents/Frameworks/QSInterface.framework;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		E1022AE906B3469300299BEC = {
-			fileRef = E1022AE706B3469300299BEC;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E1022AEA06B3469300299BEC = {
-			fileRef = E1022AE806B3469300299BEC;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		E1022B2806B3475D00299BEC = {
 			buildActionMask = 2147483647;
 			files = (

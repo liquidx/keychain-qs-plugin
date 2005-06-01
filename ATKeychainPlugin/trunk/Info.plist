@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Keychain Module</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.blacktree.Quicksilver.ATKeychainPlugin</string>
+	<string>net.liquidx.ATKeychainPlugin</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>2.0</string>
 	<key>CFBundleVersion</key>
-	<string>F0F</string>
+	<string>F17</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2005. Alastair Tse &lt;alastair@liquidx.net&gt;.</string>
 	<key>QSActions</key>
@@ -133,7 +133,7 @@
 	<array>
 		<dict>
 			<key>ID</key>
-			<string>ATPresetKeychains</string>
+			<string>ATPresetKeychainGroup</string>
 			<key>children</key>
 			<array>
 				<dict>
@@ -152,7 +152,7 @@
 					<key>ID</key>
 					<string>ATPresetKeychainItems</string>
 					<key>enabled</key>
-					<false/>
+					<true/>
 					<key>icon</key>
 					<string>KeychainKeyIcon</string>
 					<key>name</key>
@@ -166,7 +166,7 @@
 			<key>icon</key>
 			<string>com.apple.keychainaccess</string>
 			<key>name</key>
-			<string>Keychains</string>
+			<string>Keychain Access</string>
 			<key>source</key>
 			<string>QSGroupObjectSource</string>
 		</dict>

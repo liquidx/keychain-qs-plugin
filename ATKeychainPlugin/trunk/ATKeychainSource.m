@@ -14,12 +14,35 @@
 #define kATKeychainItemRefType		@"ATKeychainItemRefType"
 #define kATKeychainItemPropertyType @"ATKeychainItemPropertyType"
 
+@interface ATKeychainSource (Private)
+- (NSArray *) qsObjectsOfPropertiesOfKeychainItem:(SecKeychainItemRef)keychainItem;
+- (NSArray *) qsObjectsOfKeychainItems:(SecKeychainRef)keychain;
+- (NSArray *) qsObjectsOfKeychains;
+@end
+
 @implementation ATKeychainSource
 
 - (NSImage *) iconForEntry:(NSDictionary *)dict
 {
     return [QSResourceManager imageNamed:@"com.apple.keychainaccess"];
 }
+
+
+- (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry
+{
+	NSArray *foundKeychains = [self qsObjectsOfKeychains];
+	NSEnumerator *e = [foundKeychains objectEnumerator];
+	QSObject *q = nil;
+	while (q = [e nextObject]) {
+		NSDate *modDate = [[[NSFileManager defaultManager] fileAttributesAtPath:[q objectForType:QSFilePathType] 
+												 traverseLink:YES] fileModificationDate];
+		if ([modDate compare:indexDate] == NSOrderedDescending) {
+			return YES;
+		}
+	}
+	return YES;
+}
+
 
 - (NSArray *) qsObjectsOfPropertiesOfKeychainItem:(SecKeychainItemRef)keychainItem 
 {
@@ -177,8 +200,9 @@
 	}
 }
 
-- (NSString *)identifierForObject:(id <QSObject>)object{
-    return [@"[Keychain]:"stringByAppendingString:[object objectForType:kATKeychainType]];
+- (NSString *)identifierForObject:(id <QSObject>)object
+{
+    return [@"[Keychain]: "stringByAppendingString:[object objectForType:kATKeychainType]];
 }
 
 - (BOOL)loadChildrenForObject:(QSObject *)object{
@@ -200,6 +224,11 @@
     [object setIcon:[QSResourceManager imageNamed:@"com.apple.keychainaccess"]];
 }
 
+
+- (BOOL)loadIconForObject:(QSObject *)object
+{
+	return NO;
+}
 
 @end
 
@@ -302,11 +331,5 @@
 	return nil;
 }
 
-/*
-- (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry
-{
-	return YES;
-}
-*/
 
 @end
