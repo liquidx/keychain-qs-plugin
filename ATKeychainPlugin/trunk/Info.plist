@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>2.1</string>
 	<key>CFBundleVersion</key>
-	<string>F17</string>
+	<string>F1A</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2005. Alastair Tse &lt;alastair@liquidx.net&gt;.</string>
 	<key>QSActions</key>
@@ -133,12 +133,12 @@
 	<array>
 		<dict>
 			<key>ID</key>
-			<string>ATPresetKeychainGroup</string>
+			<string>QSPresetATPresetKeychainGroup</string>
 			<key>children</key>
 			<array>
 				<dict>
 					<key>ID</key>
-					<string>ATPresetKeychains</string>
+					<string>QSPresetATPresetKeychains</string>
 					<key>enabled</key>
 					<true/>
 					<key>icon</key>
@@ -150,7 +150,7 @@
 				</dict>
 				<dict>
 					<key>ID</key>
-					<string>ATPresetKeychainItems</string>
+					<string>QSPresetATPresetKeychainItems</string>
 					<key>enabled</key>
 					<true/>
 					<key>icon</key>
