@@ -5,21 +5,21 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>Keychain Module</string>
+	<string>Keychain Catalog Module</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.liquidx.ATKeychainPlugin</string>
+	<string>net.liquidx.ATKeychainCatalogPlugin</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Keychain Module</string>
+	<string>Keychain Catalog Module</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>2.1</string>
 	<key>CFBundleVersion</key>
-	<string>F21</string>
+	<string>81</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2005. Alastair Tse &lt;alastair@liquidx.net&gt;.</string>
+	<string>Copyright 2006, Alastair Tse.</string>
+	<key>NSPrincipalClass</key>
+	<string>ATKeychainPlugin</string>
 	<key>QSActions</key>
 	<dict>
 		<key>ATKeychainItemAccountCopyAction</key>
@@ -28,8 +28,6 @@
 			<string>ATKeychainActionProvider</string>
 			<key>actionSelector</key>
 			<string>copyAccountName:</string>
-			<key>description</key>
-			<string>Copy account name to the clipboard</string>
 			<key>directTypes</key>
 			<array>
 				<string>ATKeychainItemType</string>
@@ -39,7 +37,7 @@
 			<key>name</key>
 			<string>Copy Account Name</string>
 			<key>rankModification</key>
-			<real>0.10000000000000001</real>
+			<real>0.20000000000000001</real>
 			<key>validatesObjects</key>
 			<false/>
 		</dict>
@@ -49,8 +47,6 @@
 			<string>ATKeychainActionProvider</string>
 			<key>actionSelector</key>
 			<string>copyComment:</string>
-			<key>description</key>
-			<string>Copy Comment to the clipboard</string>
 			<key>directTypes</key>
 			<array>
 				<string>ATKeychainItemType</string>
@@ -60,28 +56,7 @@
 			<key>name</key>
 			<string>Copy Comment</string>
 			<key>rankModification</key>
-			<real>0.10000000000000001</real>
-			<key>validatesObjects</key>
-			<false/>
-		</dict>
-		<key>ATKeychainItemLocationCopyAction</key>
-		<dict>
-			<key>actionClass</key>
-			<string>ATKeychainActionProvider</string>
-			<key>actionSelector</key>
-			<string>copyLocation:</string>
-			<key>description</key>
-			<string>Copy Location to the clipboard</string>
-			<key>directTypes</key>
-			<array>
-				<string>ATKeychainItemType</string>
-			</array>
-			<key>icon</key>
-			<string>com.apple.keychainaccess</string>
-			<key>name</key>
-			<string>Copy Location</string>
-			<key>rankModification</key>
-			<real>0.10000000000000001</real>
+			<real>0.29999999999999999</real>
 			<key>validatesObjects</key>
 			<false/>
 		</dict>
@@ -91,8 +66,6 @@
 			<string>ATKeychainActionProvider</string>
 			<key>actionSelector</key>
 			<string>copyPassword:</string>
-			<key>description</key>
-			<string>Copy password to the clipboard</string>
 			<key>directTypes</key>
 			<array>
 				<string>ATKeychainItemType</string>
@@ -102,7 +75,27 @@
 			<key>name</key>
 			<string>Copy Password</string>
 			<key>rankModification</key>
-			<real>0.20000000000000001</real>
+			<real>0.10000000000000001</real>
+			<key>validatesObjects</key>
+			<false/>
+		</dict>
+		<key>ATKeychainOpenAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>ATKeychainActionProvider</string>
+			<key>actionSelector</key>
+			<string>openKeychain:</string>
+			<key>directTypes</key>
+			<array>
+				<string>ATKeychainItemType</string>
+				<string>ATKeychainType</string>
+			</array>
+			<key>icon</key>
+			<string>com.apple.keychainaccess</string>
+			<key>name</key>
+			<string>Open Keychain</string>
+			<key>rankModification</key>
+			<real>0.40000000000000002</real>
 			<key>validatesObjects</key>
 			<false/>
 		</dict>
@@ -110,55 +103,55 @@
 	<key>QSPlugIn</key>
 	<dict>
 		<key>author</key>
-		<string>Alastair Tse (liquidx)</string>
+		<string>Alastair Tse</string>
 		<key>categories</key>
 		<array>
-			<string>System</string>
 			<string>Security</string>
+			<string>System</string>
 		</array>
 		<key>description</key>
-		<string>Access to Keychain entries</string>
-		<key>infoFile</key>
-		<string>Info.rtf</string>
-		<key>relatedBundles</key>
+		<string>Access to all Keychain Items</string>
+		<key>icon</key>
+		<string>com.apple.keychainaccess</string>
+		<key>qsversion</key>
+		<string>29CC</string>
+		<key>relatedBundles </key>
 		<array>
 			<string>com.apple.keychainaccess</string>
 		</array>
 		<key>requiresFeature</key>
-		<string>1</string>
-		<key>webIcon</key>
-		<string>image:com.apple.keychainaccess</string>
+		<integer>1</integer>
 	</dict>
 	<key>QSPresetAdditions</key>
 	<array>
 		<dict>
 			<key>ID</key>
-			<string>QSPresetATPresetKeychainGroup</string>
+			<string>ATPresetKeychainGroup</string>
 			<key>children</key>
 			<array>
 				<dict>
 					<key>ID</key>
-					<string>QSPresetATPresetKeychains</string>
+					<string>ATPresetKeychainActions</string>
 					<key>enabled</key>
 					<true/>
-					<key>icon</key>
-					<string>com.apple.keychainaccess</string>
 					<key>name</key>
-					<string>Keychains</string>
+					<string>Keychain Actions</string>
+					<key>requiresBundle</key>
+					<string>com.apple.keychainaccess</string>
 					<key>source</key>
-					<string>ATKeychainSource</string>
+					<string>ATKeychainActionSource</string>
 				</dict>
 				<dict>
 					<key>ID</key>
-					<string>QSPresetATPresetKeychainItems</string>
+					<string>ATPresetKeychains</string>
 					<key>enabled</key>
 					<true/>
-					<key>icon</key>
-					<string>KeychainKeyIcon</string>
 					<key>name</key>
 					<string>Keychain Items</string>
+					<key>requiresBundle</key>
+					<string>com.apple.keychainaccess</string>
 					<key>source</key>
-					<string>ATKeychainSource</string>
+					<string>ATKeychainObjectSource</string>
 				</dict>
 			</array>
 			<key>enabled</key>
@@ -166,7 +159,9 @@
 			<key>icon</key>
 			<string>com.apple.keychainaccess</string>
 			<key>name</key>
-			<string>Keychain Access</string>
+			<string>Keychain Catalog Items</string>
+			<key>requiresBundle</key>
+			<string>com.apple.keychainaccess</string>
 			<key>source</key>
 			<string>QSGroupObjectSource</string>
 		</dict>
@@ -180,53 +175,89 @@
 		</dict>
 		<key>QSBundleChildHandlers</key>
 		<dict>
-			<key>ATKeychainItemType</key>
-			<string>ATKeychainSource</string>
-			<key>ATKeychainType</key>
-			<string>ATKeychainSource</string>
 			<key>com.apple.keychainaccess</key>
-			<string>ATKeychainSource</string>
+			<string>ATKeychainPluginSource</string>
+		</dict>
+		<key>QSCommands</key>
+		<dict>
+			<key>ATKeychainLockCommand</key>
+			<dict>
+				<key>actionID</key>
+				<string>AppleScriptRunAction</string>
+				<key>directResource</key>
+				<dict>
+					<key>bundle</key>
+					<string>net.liquidx.ATKeychainCatalogPlugin</string>
+					<key>path</key>
+					<string>Contents/Resources/LockKeychains.scpt</string>
+				</dict>
+				<key>name</key>
+				<string>Lock Keychains</string>
+			</dict>
 		</dict>
 		<key>QSObjectHandlers</key>
 		<dict>
-			<key>ATKeychainItemPropertyType</key>
-			<string>ATKeychainSource</string>
 			<key>ATKeychainItemType</key>
-			<string>ATKeychainSource</string>
-			<key>ATKeychainSource</key>
-			<string>ATKeychainSource</string>
+			<string>ATKeychainObjectHandler</string>
+			<key>ATKeychainPropertyType</key>
+			<string>ATKeychainObjectHandler</string>
 			<key>ATKeychainType</key>
-			<string>ATKeychainSource</string>
+			<string>ATKeychainObjectHandler</string>
 		</dict>
 		<key>QSObjectSources</key>
 		<dict>
-			<key>ATKeychainSource</key>
-			<string>ATKeychainSource</string>
+			<key>ATKeychainActionSource</key>
+			<string>ATKeychainActionSource</string>
+			<key>ATKeychainObjectSource</key>
+			<string>ATKeychainObjectSource</string>
+		</dict>
+		<key>QSPreferencePanesTemplate</key>
+		<dict>
+			<key>ATKeychainPlugin_PrefPane</key>
+			<dict>
+				<key>class</key>
+				<string>QSPreferencePane</string>
+				<key>description</key>
+				<string>Preferences</string>
+				<key>icon</key>
+				<string></string>
+				<key>name</key>
+				<string>ATKeychainPlugin</string>
+			</dict>
 		</dict>
 	</dict>
-	<key>QSResourceAdditions</key>
+	<key>QSRequirementsTemplate</key>
 	<dict>
-		<key>KeychainKeyIcon</key>
-		<dict>
-			<key>bundle</key>
-			<string>com.apple.keychainaccess</string>
-			<key>resource</key>
-			<string>key.icns</string>
-		</dict>
-		<key>KeychainNetVolIcon</key>
-		<dict>
-			<key>bundle</key>
-			<string>com.apple.keychainaccess</string>
-			<key>resource</key>
-			<string>netvol.icns</string>
-		</dict>
-		<key>KeychainURLIcon</key>
-		<dict>
-			<key>bundle</key>
-			<string>com.apple.keychainaccess</string>
-			<key>resource</key>
-			<string>url.icns</string>
-		</dict>
+		<key>bundlesTemplate</key>
+		<array>
+			<dict>
+				<key>id</key>
+				<string></string>
+				<key>name</key>
+				<string></string>
+				<key>version</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>feature</key>
+		<integer>0</integer>
+		<key>launchLoad</key>
+		<false/>
+		<key>pathsTemplate</key>
+		<array>
+			<string>/path/to/something</string>
+		</array>
+		<key>pluginsTemplate</key>
+		<array>
+			<dict>
+				<key>id</key>
+				<string></string>
+				<key>name</key>
+				<string></string>
+				<key>version</key>
+				<string></string>
+			</dict>
+		</array>
 	</dict>
 </dict>
 </plist>

@@ -1,16 +1,16 @@
 //
-//  Keychain_Module_Source.m
-//  Keychain Module
+//  ATKeychainPluginSource.m
+//  ATKeychainPlugin
 //
-//  Created by Alastair on 27/03/2005.
-//  Copyright __MyCompanyName__ 2005. All rights reserved.
+//  Created by Alastair on 22/08/2006.
+//  Copyright liquidx.net 2006. All rights reserved.
 //
 
-#import "Keychain_Module_Source.h"
+#import "ATKeychainPluginSource.h"
 #import <QSCore/QSObject.h>
 
 
-@implementation Keychain_Module_Source
+@implementation ATKeychainPluginSource
 - (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry{
     return YES;
 }
@@ -19,16 +19,19 @@
     return nil;
 }
 
-- (NSString *)identifierForObject:(id <QSObject>)object{
-    return nil;
-}
+
+// Return a unique identifier for an object (if you haven't assigned one before)
+//- (NSString *)identifierForObject:(id <QSObject>)object{
+//    return nil;
+//}
+
 - (NSArray *) objectsForEntry:(NSDictionary *)theEntry{
     NSMutableArray *objects=[NSMutableArray arrayWithCapacity:1];
     QSObject *newObject;
 	
 	newObject=[QSObject objectWithName:@"TestObject"];
-	[newObject setObject:@"" forType:Keychain_ModuleType];
-	[newObject setPrimaryType:Keychain_ModuleType];
+	[newObject setObject:@"" forType:ATKeychainPluginType];
+	[newObject setPrimaryType:ATKeychainPluginType];
 	[objects addObject:newObject];
   
     return objects;
@@ -44,7 +47,7 @@
 }
 - (BOOL)loadIconForObject:(QSObject *)object{
 	return NO;
-    id data=[object objectForType:Keychain_ModuleType];
+    id data=[object objectForType:kATKeychainPluginType];
 	[object setIcon:nil];
     return YES;
 }

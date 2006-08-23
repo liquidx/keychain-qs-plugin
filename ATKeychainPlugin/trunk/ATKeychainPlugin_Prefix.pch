@@ -1,11 +1,12 @@
 //
-// Prefix header for all source files of the 'Keychain Module' target in the 'Keychain Module' project
+// Prefix header for all source files of the 'ATKeychainPlugin' target in the 'ATKeychainPlugin' project
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-	#import <QSCore/QSCore.h>
+#import <Cocoa/Cocoa.h>
+#import <QSFoundation/QSFoundation.h>
+#import <QSCore/QSCore.h>
 #endif
 
 
-#define kATKeychainModuleType @"ATKeychainModuleType"
+#define kATKeychainPluginType @"ATKeychainPluginType"
