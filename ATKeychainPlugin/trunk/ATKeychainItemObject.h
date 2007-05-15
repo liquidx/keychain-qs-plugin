@@ -13,10 +13,13 @@
 	NSDictionary		*keychainProperties;
 }
 
-- (id) initWithKeychainItemRef:(SecKeychainItemRef)newItemRef;
+- (id) initWithKeychainItemRef:(SecKeychainItemRef)newItemRef
+					 itemClass:(SecItemClass)itemClass;
++ (BOOL) isValidKeychainItem:(SecKeychainItemRef)itemRef 
+				   itemClass:(SecItemClass)itemClass;
++ (ATKeychainItemObject *)keychainItemObject:(SecKeychainItemRef)newItemRef 
+								   itemClass:(SecItemClass)itemClass;
 
-+ (BOOL) isValidKeychainItem:(SecKeychainItemRef)itemRef;
-+ (ATKeychainItemObject *)keychainItemObject:(SecKeychainItemRef)newItemRef;
 + (NSDictionary *) internetKeychainItemToDictionary:(SecKeychainItemRef)itemRef;
 
 @end

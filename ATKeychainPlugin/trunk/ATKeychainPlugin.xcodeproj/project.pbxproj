@@ -19,30 +19,6 @@
 		E1EAB046068128A200774DFF /* ATKeychainPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EAB045068128A200774DFF /* ATKeychainPlugin.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXBuildStyle section */
-		2E58F360FFB2326E11CA0CBA /* Development */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				ZERO_LINK = YES;
-			};
-			name = Development;
-		};
-		2E58F361FFB2326E11CA0CBA /* Deployment */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				ZERO_LINK = NO;
-			};
-			name = Deployment;
-		};
-/* End PBXBuildStyle section */
-
 /* Begin PBXFileReference section */
 		03054E880A9BDFC200A0EA90 /* LockKeychains.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.scpt; path = LockKeychains.scpt; sourceTree = SOURCE_ROOT; };
 		0356CB8D0A9B5DD7000B070F /* ATKeychainObjectSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATKeychainObjectSource.h; sourceTree = "<group>"; };
@@ -180,21 +156,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				BUILD_DIR = "$(SYMROOT)/PlugIns/";
-				FRAMEWORK_SEARCH_PATHS = (
-					/Applications/Quicksilver.app/Contents/Frameworks,
-					/Volumes/Lore/Forge/Build,
-				);
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = ATKeychainPlugin_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Developer/Palettes";
-				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = ATKeychainPlugin;
-				WRAPPER_EXTENSION = qsplugin;
-			};
 			dependencies = (
 			);
 			name = "Keychain Catalog Module";
@@ -209,12 +170,6 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 7F6B3EEF085CE8DF000735A8 /* Build configuration list for PBXProject "ATKeychainPlugin" */;
-			buildSettings = {
-			};
-			buildStyles = (
-				2E58F360FFB2326E11CA0CBA /* Development */,
-				2E58F361FFB2326E11CA0CBA /* Deployment */,
-			);
 			hasScannedForEncodings = 1;
 			mainGroup = 0259C574FE90428111CA0C5A /* ATKeychainPlugin */;
 			projectDirPath = "";

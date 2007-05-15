@@ -82,6 +82,8 @@
 													   NULL, &searchRef);
 		if (status != noErr) {
 			NSLog(@"ATKeychain: Error creating search ref; %d", status);
+			searchRef = nil;
+			itemRef = nil;
 			continue;
 		}
 		
@@ -89,8 +91,10 @@
 		while ((status = SecKeychainSearchCopyNext(searchRef, &itemRef)) != 
 			   errSecItemNotFound) {
 
-			if ([ATKeychainItemObject isValidKeychainItem:itemRef]) {
-				item = [ATKeychainItemObject keychainItemObject:itemRef];
+			if ([ATKeychainItemObject isValidKeychainItem:itemRef 
+												itemClass:supportedClasses[i]]) {
+				item = [ATKeychainItemObject keychainItemObject:itemRef 
+													  itemClass:supportedClasses[i]];
 				if (item)
 					[keychainItems addObject:item];
 			}

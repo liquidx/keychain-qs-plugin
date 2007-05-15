@@ -12,7 +12,8 @@
 
 @implementation ATKeychainItemObject
 
-- (id) initWithKeychainItemRef:(SecKeychainItemRef)newItemRef
+- (id) initWithKeychainItemRef:(SecKeychainItemRef)newItemRef 
+					 itemClass:(SecItemClass)itemClass
 {
 	self = [super init];
 	if (self) {
@@ -22,17 +23,25 @@
 			keychainProperties = nil;
 		}
 		else {
-			CFRetain(newItemRef);
+			//CFRetain(newItemRef);
 			keychainProperties = [[ATKeychainItemObject internetKeychainItemToDictionary:newItemRef] retain];
 			
 			// Setup other QSObject attributes
 			[self setName:[keychainProperties objectForKey:@"Name"]];
 			[self setDetails:[keychainProperties objectForKey:@"Account"]];
-			[self setObject:[keychainProperties objectForKey:@"Name"] 
-					forType:QSTextType];
+			[self setObject:[keychainProperties objectForKey:@"Name"] forType:QSTextType];
 			[self setObject:(id)newItemRef forType:kATKeychainItemType];
 			[self setObject:kATKeychainItemPasswordCopyAction forMeta:kQSObjectDefaultAction];
 			[self setPrimaryType:kATKeychainItemType];
+			
+			if (itemClass != kSecGenericPasswordItemClass) {
+				[self setObject:kATKeychainItemGenericPassword
+						forType:kATKeychainItemPasswordType];
+			}
+			else {
+				[self setObject:kATKeychainItemInternetPassword
+						forType:kATKeychainItemPasswordType];
+			}
 			
 			// create identifier
 			NSString *keychain = [keychainProperties objectForKey:@"Keychain"];
@@ -58,11 +67,14 @@
 }
 
 + (ATKeychainItemObject *)keychainItemObject:(SecKeychainItemRef)newItemRef
+								   itemClass:(SecItemClass)itemClass
 {
-	return [[[ATKeychainItemObject alloc] initWithKeychainItemRef:newItemRef] autorelease];
+	return [[[ATKeychainItemObject alloc] initWithKeychainItemRef:newItemRef 
+														itemClass:itemClass] autorelease];
 }	
 
 + (BOOL) isValidKeychainItem:(SecKeychainItemRef)itemRef
+				   itemClass:(SecItemClass)itemClass
 {
 	// do some basic checks to see whether we should index this item in QS.
 	OSStatus status;
@@ -70,17 +82,17 @@
 	attributes[0].tag = kSecNegativeItemAttr;
 	attributes[1].tag = kSecServiceItemAttr;
 	SecKeychainAttributeList attrList = {2, attributes};
-	BOOL isValid = NO;
+	BOOL isValid = YES;
 	
-	status = SecKeychainItemCopyContent(itemRef, NULL, &attrList, NULL, NULL);
-	if (status != noErr)
-		return NO;
+	//status = SecKeychainItemCopyContent(itemRef, NULL, &attrList, NULL, NULL);
+	//if (status != noErr)
+	//	return NO;
 	
 	//NSLog(@"ATKeychain: %s", attributes[1].data);
-	if (!attributes[0].data)		
-		isValid = YES;
+	//if (!attributes[0].data)		
+	//	isValid = YES;
 	
-	SecKeychainItemFreeContent(&attrList, NULL);
+	//SecKeychainItemFreeContent(&attrList, NULL);
 	
 	return isValid;
 }
@@ -152,6 +164,45 @@
 	
 	return item;
 }
+
++ (NSDictionary *) genericKeychainItemToDictionary:(SecKeychainItemRef)anItemRef
+{
+	NSMutableDictionary *item;
+	OSStatus status;
+	int i = 0;
+	
+	NSString *keys[1] = {
+		@"Service",
+	};
+	
+	// obtain attributes from KeychainItem
+	SecKeychainAttribute attributes[1];
+	attributes[0].tag = kSecServiceItemAttr;
+	
+	SecKeychainAttributeList attrList = {1, attributes};
+	
+	status = SecKeychainItemCopyContent(anItemRef,
+										NULL,
+										&attrList,
+										NULL, NULL); // for no password
+	
+	if (status != noErr) {
+		return nil;
+	}
+	
+	item = [NSMutableDictionary dictionary];
+	for (i = 0; i < attrList.count; i++) {
+		if (attributes[i].length > 0) {
+			[item setValue:[NSString stringWithCString:attributes[i].data
+												length:attributes[i].length]
+					forKey:keys[i]];
+		}
+	}
+	
+	SecKeychainItemFreeContent(&attrList, NULL);	
+	return item;
+}
+
 
 #pragma mark -
 
